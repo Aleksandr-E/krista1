@@ -1,0 +1,104 @@
+<body> 
+<script>                
+ShowTable ();
+function ShowTable () {
+  var body = document.querySelector('body');
+  var table = document.createElement('table');
+  table.setAttribute('Id', 'intbl');
+  table.setAttribute('align', 'center');
+  table.setAttribute('border', '1'); 
+  var tr = document.createElement('tr');
+  tr = document.createElement('tr');
+  var hd = ['A', 'B', 'C', 'D', 'E']
+  for (var i = 1; i <= 5; i++) {
+    var td = document.createElement('td');
+    var inpt = document.createElement('input');
+    inpt.setAttribute('type', 'text');
+    td.appendChild(inpt);
+    td.innerHTML = hd[i-1];
+    tr.appendChild(td);
+  }
+  table.appendChild(tr);
+  for (var i = 2; i <= 11; i++) {
+    tr = document.createElement('tr');
+    for (var j = 1; j <= 5; j++) {
+      td = document.createElement('td');
+      inpt = document.createElement('input');
+      inpt.setAttribute('type', 'input');
+      inpt.setAttribute('size', '5');
+      inpt.setAttribute('id', i+' '+j);
+      td.appendChild(inpt);
+      tr.appendChild(td);
+    }
+   table.appendChild(tr); 
+  }
+  return body.appendChild(table);
+}
+
+function SortTable () {
+  var body = document.querySelector('body');
+  var table = document.createElement('table');
+  table.setAttribute('name', 'outtbl');
+  table.setAttribute('align', 'center');
+  table.setAttribute('border', '1');
+  table.setAttribute('id', 'outtbl');
+  var tr = document.createElement('tr');
+  for (var i = 1; i <= 5; i++) {
+    var td = document.createElement('td');
+    var inpt = document.createElement('input');
+    inpt.setAttribute('type', 'text');    
+    td.appendChild(inpt);
+    if (i != 3) {
+    td.innerHTML = document.getElementById('intbl').rows[0].cells[i-1].innerText;
+    tr.appendChild(td);
+    }   
+  }
+  table.appendChild(tr);
+  var arr = [];
+  for (var j = 2; j <= 11; j++) {
+  var sum = 0;
+  var maxx = parseInt(document.getElementById(j+' 5').value);
+  for (var i = j; i <= 11; i++) {
+    if (document.getElementById(j+' 1').value+'@'+document.getElementById(j+' 2').value == 
+        document.getElementById(i+' 1').value+'@'+document.getElementById(i+' 2').value)
+    {sum = sum + parseInt(document.getElementById(i+' 4').value);
+    if (maxx < parseInt(document.getElementById(i+' 5').value))
+       maxx = parseInt(document.getElementById(i+' 5').value);
+    }    
+  }
+  var flag = 0;
+  for(var k=0; k<arr.length;k++) 
+    if (arr[k]==document.getElementById(j+' 1').value+'@'+document.getElementById(j+' 2').value)
+      flag = 1;
+  if (flag == 0) {
+  if (document.getElementById(j+' 1').value !=='') {
+  arr[k]=document.getElementById(j+' 1').value+'@'+document.getElementById(j+' 2').value;
+  tr = document.createElement('tr');
+  for (var i = 1; i <= 4; i++) {
+    var td = document.createElement('td');                                            
+    var inpt = document.createElement('input');
+    inpt.setAttribute('type', 'text');    
+    td.appendChild(inpt);
+    if (i == 1) td.innerHTML = document.getElementById(j+' 1').value;
+    if (i == 2) td.innerHTML = document.getElementById(j+' 2').value;
+    if (i == 3) td.innerHTML = sum;
+    if (i == 4) td.innerHTML = maxx;
+    tr.appendChild(td);    
+  }
+  table.appendChild(tr);
+  }
+ }
+}
+  firstTable = document.getElementById('outtbl');
+  if (firstTable == null) {
+        return body.appendChild(table);
+      } else {
+        var newTable = body.appendChild(table);
+        return document.body.replaceChild(newTable, firstTable);
+      }
+}
+</script>
+<div align='center'>  
+  <button id='create' onclick='SortTable ()'>—группировать</button>                    
+</div>
+</body>
